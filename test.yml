@@ -1,0 +1,18 @@
+version: '2'
+
+services:
+    web:
+        environment:
+            DJANGO_SECRET_KEY: 'super_secret_django_key'
+            DJANGO_SETTINGS_MODULE: 'hippo.config'
+            DJANGO_CONFIGURATION: 'Test'
+            PYTHON_PATH: '.'
+        image: web
+        build: ./
+        command: >
+            bash -c "./manage.py makemigrations &&
+                     ./manage.py migrate &&
+                     coverage run ./manage.py test &&
+                     coverage xml -o coverage.xml"
+        volumes:
+            - ./:/code
