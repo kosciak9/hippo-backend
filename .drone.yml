@@ -1,0 +1,13 @@
+pipeline:
+    unit-testing:
+        image: python:latest
+        environment:
+            - DJANGO_SETTINGS_MODULE=hippo.config
+            - DJANGO_CONFIGURATION=Test
+        commands:
+            - cd ./backend
+            - pip install -r requirements.txt
+            - flake8 .
+            - ./manage.py makemigrations users
+            - ./manage.py migrate
+            - ./manage.py test
